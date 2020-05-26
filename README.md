@@ -4,10 +4,11 @@
 
 |Platform|Version|
 | ------------------- | :------------------: |
-|Xamarin.iOS|iOS 7+|
-|Xamarin.tvOS|All|
-|Xamarin.Android|API 10+|
 |UWP|API 10+|
+|Xamarin.Android|API 10+|
+|Xamarin.iOS|iOS 7+|
+|Xamarin.Mac|macOS 10.14+|
+|Xamarin.tvOS|All|
 
 
 ### Build Status
@@ -44,7 +45,7 @@ void OpenStoreReviewPage(string appId);
 ```
 
 #### Request Review
-UWP (all versions) and iOS only to prompt for the user to review the app. Only on iOS 10.3+ devices:
+UWP (all versions), iOS and macOS only to prompt for the user to review the app:
 Read: https://blog.xamarin.com/requesting-reviews-ios-10-3s-skstorereviewcontroller/
 
 ```csharp
