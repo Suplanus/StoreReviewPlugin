@@ -25,8 +25,10 @@ namespace Plugin.StoreReview
 			var url = $"itms-apps://itunes.apple.com/app/id{appId}";
 #elif __TVOS__
 			var url = $"com.apple.TVAppStore://itunes.apple.com/app/id{appId}";
+#elif __MACOS__
+			var url = $"macappstore://apps.apple.com/app/id{appId}";
 #endif
-			try
+            try
             {
                 UIApplication.SharedApplication.OpenUrl(new NSUrl(url));
             }
@@ -46,9 +48,11 @@ namespace Plugin.StoreReview
             var url = $"itms-apps://itunes.apple.com/app/id{appId}?action=write-review";
 #elif __TVOS__
 			var url = $"com.apple.TVAppStore://itunes.apple.com/app/id{appId}?action=write-review";
+#elif __MACOS__
+			var url = $"macappstore://apps.apple.com/app/id{appId}?action=write-review";
 #endif
-			try
-			{
+            try
+            {
                 UIApplication.SharedApplication.OpenUrl(new NSUrl(url));
             }
             catch (Exception ex)
@@ -63,15 +67,18 @@ namespace Plugin.StoreReview
         public void RequestReview()
         {
 #if __IOS__
-            if (IsiOS103)
+            var isiOS103 = UIDevice.CurrentDevice.CheckSystemVersion(10, 3);
+            if (isiOS103)
+            {
+                SKStoreReviewController.RequestReview();
+            }
+#elif __MACOS__
+            var ismacOS1014 = UIDevice.CurrentDevice.CheckSystemVersion(10, 14);
+            if (ismacOS1014)
             {
                 SKStoreReviewController.RequestReview();
             }
 #endif
         }
-
-        bool IsiOS103 => UIDevice.CurrentDevice.CheckSystemVersion(10, 3);
-    
-
     }
 }
