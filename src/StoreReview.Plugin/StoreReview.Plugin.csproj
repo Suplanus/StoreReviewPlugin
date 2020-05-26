@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="MSBuild.Sdk.Extras/2.0.54">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.0;netstandard2.0;MonoAndroid71;Xamarin.iOS10;uap10.0.15063;Xamarin.TVOS10;Xamarin.Mac;</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;Xamarin.iOS10;xamarinmac20;</TargetFrameworks>
     <AssemblyName>Plugin.StoreReview</AssemblyName>
     <RootNamespace>Plugin.StoreReview</RootNamespace>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
@@ -10,7 +10,6 @@
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
     <Authors>James Montemagno</Authors>
     <PackageId>Plugin.StoreReview</PackageId>
-    <PackOnBuild>true</PackOnBuild>
     <PackageIconUrl>http://www.refractored.com/images/pluginstore.png</PackageIconUrl>
     <PackageLicenseUrl>https://github.com/jamesmontemagno/StoreReviewPlugin/blob/master/LICENSE</PackageLicenseUrl>
     <Owners>JamesMontemagno</Owners>
@@ -22,7 +21,7 @@
     <Description>
       Easily request a review or open the store page for your app.
     </Description>
-    <Copyright>Copyright 2018</Copyright>
+    <Copyright>Copyright 2020</Copyright>
     <RepositoryUrl>https://github.com/jamesmontemagno/StoreReviewPlugin</RepositoryUrl>
     <PackageReleaseNotes>See: https://github.com/jamesmontemagno/StoreReviewPlugin </PackageReleaseNotes>
 
@@ -38,24 +37,18 @@
     <DefineConstants>$(DefineConstants);</DefineConstants>
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <ReleaseVersion>1.6.0</ReleaseVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DefineConstants>__MACOS__;__MOBILE__;__UNIFIED__;TRACE;;XAMARINIOS;DEBUG;NETSTANDARD</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MSBuild.Sdk.Extras" Version="1.4.0" PrivateAssets="All" />
     <Compile Include="**\*.shared.cs" />
   </ItemGroup>
 
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
-  </ItemGroup>
-
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="5.2.4" />
-    <Compile Include="**\*.uwp.cs" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
-    <Compile Include="**\*.android.cs" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
@@ -66,12 +59,10 @@
     <Compile Include="**\*.apple.cs" />
   </ItemGroup>
 
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.Mac')) ">
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('xamarinmac20')) ">
     <Compile Include="**\*.apple.cs" />
   </ItemGroup>
-
-
-
+  
   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 
 
